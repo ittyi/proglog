@@ -6,6 +6,10 @@ import (
 )
 
 type Log struct {
+	// ミューテックスは相互排他ロックです。
+	// ミューテックスのゼロ値は、ロックが解除されたミューテックスです。
+	//
+	// ミューテックスは最初に使用した後にコピーしてはなりません。
 	mu      sync.Mutex
 	records []Record
 }
@@ -15,7 +19,12 @@ func NewLog() *Log {
 }
 
 func (c *Log) Append(record Record) (uint64, error) {
+	// Lock は m *Mutex をロックします。
+	// ロックがすでに使用されている場合、呼び出し元のゴルーチン
+	// ミューテックスが使用可能になるまでブロックします。
 	c.mu.Lock()
+	// ロック解除は m のロックを解除します。
+	// Ulock へのエントリ時に m がロックされていない場合は、実行時エラーになります。
 	defer c.mu.Unlock()
 	record.Offset = uint64(len(c.records))
 	c.records = append(c.records, record)
