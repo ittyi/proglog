@@ -8,13 +8,34 @@ import (
 )
 
 func NewHTTPServer(addr string) *http.Server {
+	println("addr:", addr)
 	httpsrv := newhttpServer()
+	println("httpsrv:", httpsrv)
+	if httpsrv != nil {
+		println("httpsrv.Log:", httpsrv.Log)
+		println("httpsrv.Log.records:", httpsrv.Log.records)
+	}
+
+	// NewRouter は新しいルーター インスタンスを返します。
 	r := mux.NewRouter()
+	println("r:", r)
+	// HandleFunc は、URL パスのマッチャーを使用して新しいルートを登録します。
+	// Route.Path() と Route.HandlerFunc() を参照してください。
 	r.HandleFunc("/", httpsrv.handleProduce).Methods("POST")
 	r.HandleFunc("/", httpsrv.handleConsume).Methods("GET")
+	// Methods は HTTP メソッドのマッチャーを追加します。
+	// 一致する 1 つ以上のメソッドのシーケンスを受け入れます。例:
+	// 「GET」、「POST」、「PUT」。
+
+	// サーバーは、HTTP サーバーを実行するためのパラメータを定義します。
+	// Server の値 0 は有効な構成です。
 	return &http.Server{
+		// Addr はオプションで、リッスンするサーバーの TCP アドレスを指定します。
+		// 「ホスト:ポート」の形式。 空の場合、「:http」(ポート 80) が使用されます。
+		// サービス名は RFC 6335 で定義され、IANA によって割り当てられます。
+		// アドレス形式の詳細については、net.Dial を参照してください。
 		Addr:    addr,
-		Handler: r,
+		Handler: r, // 呼び出すハンドラー、nil の場合は http.DefaultServeMux
 	}
 }
 
