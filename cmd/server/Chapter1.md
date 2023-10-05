@@ -27,3 +27,20 @@ $ curl -X POST localhost:8080 -d \
 '{"record": {"value": "TGV0J3MgR28gIzMK"}}'
 {"offset":2}
 ```
+
+呼べば呼ぶだけカウントされていくみたい
+```
+同じvalueで何度か実行した例
+curl -X POST localhost:8080 -d \
+'{"record": {"value": "TGV0J3MgR28gIzEK"}}'
+{"offset":0}
+
+curl -X POST localhost:8080 -d \
+'{"record": {"value": "TGV0J3MgR28gIzEK"}}'
+{"offset":1}
+
+curl -X POST localhost:8080 -d \
+'{"record": {"value": "TGV0J3MgR28gIzEK"}}'
+{"offset":2}
+
+```
