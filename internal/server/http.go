@@ -90,6 +90,9 @@ func (s *httpServer) handleProduce(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	println("req.Record.Offset:", req.Record.Offset)
+	println("req.Record.Value:", string(req.Record.Value))
+
 	off, err := s.Log.Append(req.Record)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
