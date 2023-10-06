@@ -46,7 +46,7 @@ curl -X POST localhost:8080 -d \
 ```
 
 
-GETもできる
+GETもできる?
 ```
 curl -X GET localhost:8080 -d \
 '{"record": {"value": "TGV0J3MgR28gIzEK"}}'
@@ -56,3 +56,6 @@ curl -X GET localhost:8080 -d \
 
 #### req.Record.Value: Let's Go #1 発見
 ![Alt text](image.png)
+
+#### 実行結果がわかりやすいスクショ
+![Alt text](image-1.png)
